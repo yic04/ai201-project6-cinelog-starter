@@ -3,7 +3,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
-from routes.watchlist import watchlist_bp
 
 db = SQLAlchemy()
 
@@ -23,6 +22,7 @@ def create_app(config=None):
 
     from routes.films import films_bp
     from routes.collection import collection_bp
+    from routes.watchlist.watchlist import watchlist_bp
 
     app.register_blueprint(films_bp, url_prefix="/films")
     app.register_blueprint(collection_bp, url_prefix="/collection")
