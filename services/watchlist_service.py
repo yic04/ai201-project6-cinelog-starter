@@ -49,7 +49,11 @@ def add_to_watchlist(user_id, film_id):
 
 def get_watchlist(user_id):
     """
-    Return all films on a user's watchlist.
+    Return all films on a user's watchlist, oldest first.
+
+    A watchlist is a backlog to work through, so films that have been
+    waiting the longest surface first (FIFO). See Comment 5 in the PR
+    response doc for the reasoning behind this ordering.
 
     Args:
         user_id (str): UUID of the user.
@@ -60,8 +64,7 @@ def get_watchlist(user_id):
     entries = (
         WatchlistEntry.query
         .filter_by(user_id=user_id)
-        .join(Film)
-        .order_by(Film.title.asc())
+        .order_by(WatchlistEntry.date_added.asc())
         .all()
     )
 
